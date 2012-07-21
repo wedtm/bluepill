@@ -15,10 +15,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if "#{languages[:ruby][:bin_dir]}" =~ /^.*rvm\/rubies\/.*\/bin$/
+if "#{languages[:ruby][:bin_dir]}" =~ /^.*rvm\/rubies\/(.*)\/bin$/
+  default['bluepill']['gemset'] = $~[1]
   default['bluepill']['bin'] = "#{languages[:ruby]['gems_dir']}/bin/bluepill"
+  default['bluepill']['rvm_detected'] = true
 else
   default["bluepill"]["bin"] = "#{languages[:ruby][:bin_dir]}/bluepill"
+  default['bluepill']['rvm_detected'] = false
 end
 default["bluepill"]["logfile"] = "/var/log/bluepill.log"
 default["bluepill"]["pid_dir"] = "/var/run/bluepill"
